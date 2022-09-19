@@ -62,9 +62,9 @@
               <tr class="border-t border-gray-300">
                 <td class="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"><%= line_item.description %></td>
                 <td class="<%= td_css %>"><%= line_item.product.name %></td>
-                <td class="<%= td_css %>"><%= to_money(line_item.price_override_cents || line_item.product.price_cents) %></td>
+                <td class="<%= td_css %>"><%= to_money(line_item.price_override_cents || line_item.product.price_cents, params[:currency]) %></td>
                 <td class="<%= td_css %>"><%= line_item.quantity %></td>
-                <td class="<%= td_css %>"><%= to_money((line_item.price_override_cents || line_item.product.price_cents) * line_item.quantity) %></td>
+                <td class="<%= td_css %>"><%= to_money((line_item.price_override_cents || line_item.product.price_cents) * line_item.quantity, params[:currency]) %></td>
               </tr>
             <% end %>
 
@@ -75,9 +75,9 @@
               <tr class="border-t border-gray-300">
                 <td class="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"><%= line_item.description %></td>
                 <td class="<%= td_css %>"><%= line_item.service.name %></td>
-                <td class="<%= td_css %>"><%= to_money(line_item.price_override_cents || line_item.service.price_cents) %></td>
+                <td class="<%= td_css %>"><%= to_money(line_item.price_override_cents || line_item.service.price_cents, params[:currency]) %></td>
                 <td class="<%= td_css %>"><%= line_item.quantity %></td>
-                <td class="<%= td_css %>"><%= to_money((line_item.price_override_cents || line_item.service.price_cents) * line_item.quantity) %></td>
+                <td class="<%= td_css %>"><%= to_money((line_item.price_override_cents || line_item.service.price_cents) * line_item.quantity, params[:currency]) %></td>
               </tr>
             <% end %>
           </tbody>
@@ -85,7 +85,7 @@
             <tr>
               <th scope="row" colspan="4" class="hidden pl-6 pr-3 pt-4 pb-4 text-right text-sm font-semibold text-gray-900 sm:table-cell md:pl-0">Total</th>
               <th scope="row" class="pl-4 pr-3 pt-4 text-left text-sm font-semibold text-gray-900 sm:hidden">Total</th>
-              <td class="pl-3 pt-4 pb-4 text-left text-sm font-semibold text-gray-900 sm:pr-6 md:pr-0 "><%= to_money(@total) %></td>
+              <td class="pl-3 pt-4 pb-4 text-left text-sm font-semibold text-gray-900 sm:pr-6 md:pr-0 "><%= to_money(@total, params[:currency]) %></td>
             </tr>
           </tfoot>
         </table>
@@ -95,6 +95,7 @@
 </div>
 
 <div class="py-4">
+  <%= link_to 'Convert to Yen', invoice_path(@invoice, currency: 'JPY'), class: btn_css %> |
   <%= link_to 'Edit', edit_invoice_path(@invoice), class: btn_css %> |
   <%= link_to 'Back', invoices_path, class: btn_css %>
 </div>
